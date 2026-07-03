@@ -1,0 +1,239 @@
+{
+    "functions": [
+      {
+        "label": "create_project",
+        "id": "create_project",
+        "taxonomyOperations": ["CreateProject"],
+        "outputs": [
+          { "Type": ["Project"], "Format": ["pyiron_atomistics.project.Project"] }
+        ],
+        "implementation": { "code": "python - << EOF\nfrom pyiron.project import Project\n# Create Project\nproject = Project(path=projectPath)\n" }
+      },
+      {
+        "label": "create_structure_bulk",
+        "id": "create_structure_bulk",
+        "taxonomyOperations": ["CreateStructureBulk"],
+        "inputs": [
+          { "Type": ["Project"] },
+          { "Type": ["Material"], "Format": ["String"] }
+        ],
+        "outputs": [
+          { "Type": ["Bulk"], "Format": ["pyiron_atomistics.atomistics.structure.atoms.Atoms"] }
+        ],
+        "implementation": { "code": "# Create Structure\noriginalStructure = project.create.structure.bulk('FeAl', crystalstructure='cesiumchloride', a=2.9, cubic=True)\noriginalStructure = originalStructure.repeat([2, 2, 2])\n" }
+      },
+      {
+        "label": "create_vacancy_Al",
+        "id": "create_vacancy_Al",
+        "taxonomyOperations": ["CreateVacancyAl"],
+        "inputs": [
+          { "Type": ["Bulk"] },
+          { "Type": ["Position"], "Format": ["Coordinates"] }
+        ],
+        "outputs": [
+          { "Type": ["Bulk"], "Format": ["pyiron_atomistics.atomistics.structure.atoms.Atoms"] }
+        ],
+        "implementation": { "code": "# Create Vacancy Al\nvacancyAl = structure.copy()\ndel vacancyAl[position]\n" }
+      },
+      {
+        "label": "create_vacancy_Fe",
+        "id": "create_vacancy_Fe",
+        "taxonomyOperations": ["CreateVacancyFe"],
+        "inputs": [
+          { "Type": ["Bulk"] },
+          { "Type": ["Position"], "Format": ["Coordinates"] }
+        ],
+        "outputs": [
+          { "Type": ["Bulk"], "Format": ["pyiron_atomistics.atomistics.structure.atoms.Atoms"] }
+        ],
+        "implementation": { "code": "# Create Vacancy Fe\nvacancyFe = structure.copy()\ndel vacancyFe[position]\n" }
+      },
+      {
+        "label": "create_antisite_Al",
+        "id": "create_antisite_Al",
+        "taxonomyOperations": ["CreateAntisiteAl"],
+        "inputs": [
+          { "Type": ["Bulk"] },
+          { "Type": ["Position"], "Format": ["Coordinates"] }
+        ],
+        "outputs": [
+          { "Type": ["Bulk"], "Format": ["pyiron_atomistics.atomistics.structure.atoms.Atoms"] }
+        ],
+        "implementation": { "code": "# Create Antisite Al\nantisiteAl = structure.copy()\nantisiteAl[position] = 'Al'\n" }
+      },
+      {
+        "label": "create_antisite_Fe",
+        "id": "create_antisite_Fe",
+        "taxonomyOperations": ["CreateAntisiteFe"],
+        "inputs": [
+          { "Type": ["Bulk"] },
+          { "Type": ["Position"], "Format": ["Coordinates"] }
+        ],
+        "outputs": [
+          { "Type": ["Bulk"], "Format": ["pyiron_atomistics.atomistics.structure.atoms.Atoms"] }
+        ],
+        "implementation": { "code": "# Create Antisite Fe\nantisiteFe = structure.copy()\nantisiteFe[position] = 'Fe'\n" }
+      },
+      {
+        "label": "relax_structure_gpaw",
+        "id": "relax_structure_gpaw",
+        "taxonomyOperations": ["RelaxStructure_GPAW"],
+        "inputs": [
+          { "Type": ["Bulk"] }
+        ],
+        "outputs": [
+          { "Type": ["Bulk"], "Format": ["pyiron_atomistics.atomistics.structure.atoms.Atoms"] }
+        ],
+        "implementation": { "code": "# Relax Structure Gpaw\nrelax_job = project.create.job.Gpaw(jobName, delete_existing_job=False)\nrelax_job.structure = structure\nrelax_job.calc_minimize()\nrelax_job.run()\nrelaxedStructure = relax_job.get_structure()\n" }
+      },
+      {
+        "label": "relax_structure_sphinx",
+        "id": "relax_structure_sphinx",
+        "taxonomyOperations": ["RelaxStructure_Sphinx"],
+        "inputs": [
+          { "Type": ["Bulk"] }
+        ],
+        "outputs": [
+          { "Type": ["Bulk"], "Format": ["pyiron_atomistics.atomistics.structure.atoms.Atoms"] }
+        ],
+        "implementation": { "code": "# Relax Structure Sphinx\nrelax_job = project.create.job.Sphinx(jobName, delete_existing_job=False)\nrelax_job.structure = structure\nrelax_job.calc_minimize()\nrelax_job.run()\nrelaxedStructure = relax_job.get_structure()\n" }
+      },
+      {
+        "label": "relax_structure_vasp",
+        "id": "relax_structure_vasp",
+        "taxonomyOperations": ["RelaxStructure_VASP"],
+        "inputs": [
+          { "Type": ["Bulk"] }
+        ],
+        "outputs": [
+          { "Type": ["Bulk"], "Format": ["pyiron_atomistics.atomistics.structure.atoms.Atoms"] }
+        ],
+        "implementation": { "code": "# Relax Structure Vasp\nrelax_job = project.create.job.Vasp(jobName, delete_existing_job=False)\nrelax_job.structure = structure\nrelax_job.calc_minimize()\nrelax_job.run()\nrelaxedStructure = relax_job.get_structure()\n" }
+      },
+      {
+        "label": "run_vasp",
+        "id": "run_vasp",
+        "taxonomyOperations": ["RunVasp"],
+        "inputs": [
+          { "Type": ["Structure"] }
+        ],
+        "outputs": [
+          { "Type": ["Energy"], "Format": ["Float"] }
+        ],
+        "implementation": { "code": "# Run Vasp\ncalc_energy_job = project.create.job.Vasp(jobName, delete_existing_job=False)\ncalc_energy_job.structure = structure\ncalc_energy_job.run()\nenergy = calc_energy_job.output.energy_tot[0]\n" }
+      },
+      {
+        "label": "run_sphinx",
+        "id": "run_sphinx",
+        "taxonomyOperations": ["RunSphinx"],
+        "inputs": [
+          { "Type": ["Structure"] }
+        ],
+        "outputs": [
+          { "Type": ["Energy"], "Format": ["Float"] }
+        ],
+        "implementation": { "code": "# Run Sphinx\ncalc_energy_job = project.create.job.Sphinx(jobName, delete_existing_job=False)\ncalc_energy_job.structure = structure\ncalc_energy_job.run()\nenergy = calc_energy_job.output.energy_tot[0]\n" }
+      },
+      {
+        "label": "run_gpaw",
+        "id": "run_gpaw",
+        "taxonomyOperations": ["RunGpaw"],
+        "inputs": [
+          { "Type": ["Structure"] }
+        ],
+        "outputs": [
+          { "Type": ["Energy"], "Format": ["Float"] }
+        ],
+        "implementation": { "code": "# Run Gpaw\ncalc_energy_job = project.create.job.Gpaw(jobName, delete_existing_job=False)\ncalc_energy_job.structure = structure\ncalc_energy_job.run()\nenergy = calc_energy_job.output.energy_tot[0]\n" }
+      },
+      {
+        "label": "calculate_defect_formation_energy",
+        "id": "calculate_defect_formation_energy",
+        "taxonomyOperations": ["CalculateDefectFormationEnergy"],
+        "inputs": [
+          { "Type": ["Energy"] },
+          { "Type": ["Energy"] }
+        ],
+        "outputs": [
+          { "Type": ["DefectFormationEnergy"], "Format": ["Float"] }
+        ],
+        "implementation": { "code": "# Calculate defect formation energy\ndefectFormationEnergy = energyDefect - energyOriginal + chemPotential\n" }
+      },
+      {
+        "label": "calc_Al_concentration",
+        "id": "calc_Al_concentration",
+        "taxonomyOperations": ["CalculateAlConcentration"],
+        "inputs": [
+          { "Type": ["DefectConcentration"], "Format": ["Float"] },
+          { "Type": ["DefectConcentration"], "Format": ["Float"] }
+        ],
+        "outputs": [
+          { "Type": ["AlConcentration"], "Format": ["Float"] }
+        ],
+        "implementation": { "code": "# Calculate Aluminium concentration\nc_Al_AlVac = (1 - c_AlVac)/(2 - c_AlVac)\nc_Al_FeVac = 1/(2 - c_FeVac)\nc_Al = [c_Al_AlVac, c_Al_FeVac]\n" }
+      },
+      {
+        "label": "calc_defect_concentration",
+        "id": "calc_defect_concentration",
+        "taxonomyOperations": ["CalculateDefectConcentration"],
+        "inputs": [
+          { "Type": ["DefectFormationEnergy"], "Format": ["Float"] },
+          { "Type": ["ChemicalPotential"], "Format": ["Float"] }
+        ],
+        "outputs": [
+          { "Type": ["DefectConcentration"], "Format": ["Float"] }
+        ],
+        "implementation": { "code": "# Calculate defect concentration\nk_B = 0.0000862\ntemp = 1000\nconcentration_defect = math.exp(-defectFormationEnergy/(k_B * temp))\n" }
+      },
+      {
+        "label": "calc_chem_pot_Al",
+        "id": "calc_chem_pot_Al",
+        "taxonomyOperations": ["CalcChemicalPotentialAl"],
+        "inputs": [
+          { "Type": ["Material"] }
+        ],
+        "outputs": [
+          { "Type": ["ChemicalPotential"], "Format": ["Float"] }
+        ],
+        "implementation": { "code": "# Calculate chemical potential of Al\nbulk_Al = project.create.structure.bulk('Al', crystalstructure='fcc')\ncalc_potential_job = project.create.job.Gpaw(jobName, delete_existing_job=True)\ncalc_potential_job.structure = bulk_Al\ncalc_potential_job.run()\nchemPotential = calc_potential_job.output.energy_tot[0]\n" }
+      },
+      {
+        "label": "calc_chem_pot_Fe",
+        "id": "calc_chem_pot_Fe",
+        "taxonomyOperations": ["CalcChemicalPotentialFe"],
+        "inputs": [
+          { "Type": ["Material"] }
+        ],
+        "outputs": [
+          { "Type": ["ChemicalPotential"], "Format": ["Float"] }
+        ],
+        "implementation": { "code": "# Calculate chemical potential of Fe\nbulk_Fe = project.create.structure.bulk('Fe', crystalstructure='bcc')\ncalc_potential_job = project.create.job.Gpaw(jobName, delete_existing_job=True)\ncalc_potential_job.structure = bulk_Fe\ncalc_potential_job.run()\nchemPotential = calc_potential_job.output.energy_tot[0]\n" }
+      },
+      {
+        "label": "calc_chem_pot_Al",
+        "id": "calc_chem_pot_Al",
+        "taxonomyOperations": ["CalcChemicalPotentialAl"],
+        "inputs": [
+          { "Type": ["ChemicalPotential"] },
+          { "Type": ["Material"] }
+        ],
+        "outputs": [
+          { "Type": ["ChemicalPotential"], "Format": ["Float"] }
+        ],
+        "implementation": { "code": "# Calculate chemical potential of Al\nbulk_Al = project.create.structure.bulk('Al', crystalstructure='fcc')\ncalc_potential_job = project.create.job.Gpaw(jobName, delete_existing_job=True)\ncalc_potential_job.structure = bulk_Al\ncalc_potential_job.run()\nchemPotential = calc_potential_job.output.energy_tot[0]\n" }
+      },
+      {
+        "label": "calc_chem_pot_Fe",
+        "id": "calc_chem_pot_Fe",
+        "taxonomyOperations": ["CalcChemicalPotentialFe"],
+        "inputs": [
+          { "Type": ["ChemicalPotential"] },
+          { "Type": ["Material"] }
+        ],
+        "outputs": [
+          { "Type": ["ChemicalPotential"], "Format": ["Float"] }
+        ],
+        "implementation": { "code": "# Calculate chemical potential of Fe\nbulk_Fe = project.create.structure.bulk('Fe', crystalstructure='bcc')\ncalc_potential_job = project.create.job.Gpaw(jobName, delete_existing_job=True)\ncalc_potential_job.structure = bulk_Fe\ncalc_potential_job.run()\nchemPotential = calc_potential_job.output.energy_tot[0]\n" }
+      }
+    ]
+ }
