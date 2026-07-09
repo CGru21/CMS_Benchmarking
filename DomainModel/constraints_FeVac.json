@@ -1,0 +1,23 @@
+{
+    "constraints": [
+    {
+    "constraintid": "nuse_m",
+    "parameters": [
+      { "Tool" : ["CreateAntisite"]}
+    ]
+    },
+    {
+      "constraintid": "nuse_m",
+      "parameters": [
+        { "Tool" : ["CreateVacancyAl"]}
+      ]
+    },
+    {
+      "constraintid": "itn_m",
+      "parameters": [
+        { "Tool" : ["CreateVacancyFe"]},
+        { "Tool" : ["CreateVacancyFe"]}
+      ]
+    }
+    ]
+}

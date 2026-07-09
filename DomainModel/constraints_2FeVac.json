@@ -1,0 +1,21 @@
+{
+    "constraints": [
+    {
+      "constraintid": "nuse_m",
+      "parameters": [
+        { "Tool" : ["CreateAntisite"]}
+      ]
+    },
+    {
+      "constraintid": "nuse_m",
+      "parameters": [
+        { "Tool" : ["CreateVacancyAl"]}
+      ]
+    },
+    {
+      "constraintid": "SLTLx",
+      "description": "We have to use 'CreateVacancyFe' two times in a row",
+      "formula": "F <'CreateVacancyFe'(;)> <'CreateVacancyFe'(;)> true"
+    }
+    ]
+}

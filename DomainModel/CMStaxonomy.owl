@@ -53,6 +53,14 @@
     
 
 
+    <!-- http://www.semanticweb.org/materials_science#BulkModulus -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/materials_science#BulkModulus">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/materials_science#MaterialProperty"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/materials_science#CalcChemicalPotentialAl -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/materials_science#CalcChemicalPotentialAl">
@@ -64,6 +72,14 @@
     <!-- http://www.semanticweb.org/materials_science#CalcChemicalPotentialFe -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/materials_science#CalcChemicalPotentialFe">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/materials_science#GetProperty"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/materials_science#CalcPhysicalProperties -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/materials_science#CalcPhysicalProperties">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/materials_science#GetProperty"/>
     </owl:Class>
     
@@ -295,6 +311,14 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/materials_science#Iron">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/materials_science#Material"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/materials_science#LatticeConstant -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/materials_science#LatticeConstant">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/materials_science#MaterialProperty"/>
     </owl:Class>
     
 

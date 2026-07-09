@@ -134,9 +134,11 @@
       ]
     },
     {
-      "constraintid": "SLTLx",
-      "description": "We have to use 'CreateVacancyFe' at least two times",
-      "formula": "F <'CreateVacancyFe'(;)> (F <'CreateVacancyFe'(;)> true)"
+      "constraintid": "connected_op",
+      "parameters": [
+        { "Tool" : ["RelaxStructure"]},
+        { "Tool" : ["RunDFT"]}
+      ]
     }
   ]
 }
