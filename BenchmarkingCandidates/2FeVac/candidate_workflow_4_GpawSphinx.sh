@@ -12,10 +12,10 @@ node2076131627=$2
 python - << EOF
 from pyiron.project import Project
 # Create Project
-project = Project(path='../BenchmarkingResults/2FeVac/GpawSphinx/Output')
+project = Project(path='./Benchmarking/Results/2FeVac/GpawSphinx/Output')
 
 # Calculate lattice constant and bulk modulus
-reference_job = project.create.job.Gpaw('gpaw_job', delete_existing_job=True)
+reference_job = project.create.job.Sphinx('sphinx_job', delete_existing_job=True)
 reference_job.structure = project.create.structure.bulk('FeAl', crystalstructure='cesiumchloride', a=2.9)
 murn_job = project.create.job.Murnaghan('murn_job', delete_existing_job=True)
 murn_job.ref_job = reference_job
@@ -25,7 +25,7 @@ lattice_constant = (murn_job.content['output/equilibrium_volume']) ** (1/3)
 
 # Calculate chemical potential of Fe
 bulk_Fe = project.create.structure.bulk('Fe', crystalstructure='bcc')
-calc_potential_job = project.create.job.Gpaw('calc_potential', delete_existing_job=True)
+calc_potential_job = project.create.job.Sphinx('calc_potential', delete_existing_job=True)
 calc_potential_job.structure = bulk_Fe
 calc_potential_job.run()
 chemPotential = calc_potential_job.output.energy_tot[0]
@@ -35,10 +35,10 @@ originalStructure = project.create.structure.bulk('FeAl', crystalstructure='cesi
 originalStructure = originalStructure.repeat([3, 3, 3])
 
 # Run Sphinx
-calc_energy_job = project.create.job.Sphinx('calc_energy_og', delete_existing_job=False)
-calc_energy_job.structure = originalStructure
-calc_energy_job.run()
-energyOriginal = calc_energy_job.output.energy_tot[0]
+calc_energy_og_job = project.create.job.Sphinx('calc_energy_og', delete_existing_job=True)
+calc_energy_og_job.structure = originalStructure
+calc_energy_og_job.run()
+energyOriginal = calc_energy_og_job.output.energy_tot[0]
 
 # Create Vacancy Fe
 vacancyFe = originalStructure.copy()
@@ -49,20 +49,20 @@ vacancyFe = vacancyFe.copy()
 del vacancyFe[1]
 
 # Relax Structure Gpaw
-relax_job = project.create.job.Gpaw('relax_defect', delete_existing_job=False)
+relax_job = project.create.job.Gpaw('relax_defect', delete_existing_job=True)
 relax_job.structure = vacancyFe
 relax_job.calc_minimize()
 relax_job.run()
 relaxedStructure = relax_job.get_structure()
 
 # Run Sphinx
-calc_energy_job = project.create.job.Sphinx('calc_energy_defect', delete_existing_job=False)
+calc_energy_job = project.create.job.Sphinx('calc_energy_defect', delete_existing_job=True)
 calc_energy_job.structure = relaxedStructure
 calc_energy_job.run()
 energyDefect = calc_energy_job.output.energy_tot[0]
 
 # Calculate defect formation energy
-defectFormationEnergy = energyDefect - energyOriginal + chemPotential
+defectFormationEnergy = energyDefect - energyOriginal + 2*chemPotential
 
 # Calculate defect concentration
 k_B = 0.0000862
