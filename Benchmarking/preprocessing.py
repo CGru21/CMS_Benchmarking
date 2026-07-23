@@ -22,7 +22,7 @@ EOF
 ''')
 
 
-preprocessing('./BenchmarkingCandidates/2FeVac/candidate_workflow_4_GpawSphinx.sh', './Benchmarking/Results/2FeVac/GpawSphinx')
-preprocessing('./BenchmarkingCandidates/2FeVac/candidate_workflow_6_SphinxSphinx.sh', './Benchmarking/Results/2FeVac/SphinxSphinx')
-preprocessing('./BenchmarkingCandidates/2FeVac/candidate_workflow_1_SphinxGpaw.sh', './Benchmarking/Results/2FeVac/SphinxGpaw')
-preprocessing('./BenchmarkingCandidates/2FeVac/candidate_workflow_2_GpawGpaw.sh', './Benchmarking/Results/2FeVac/GpawGpaw')
+preprocessing('./BenchmarkingCandidates/2FeVac2Relax/candidate_workflow_19_GpawSphinx.sh', './Benchmarking/Results/2FeVac2Relax/GpawSphinx')
+preprocessing('./BenchmarkingCandidates/2FeVac2Relax/candidate_workflow_1_SphinxSphinx.sh', './Benchmarking/Results/2FeVac2Relax/SphinxSphinx')
+preprocessing('./BenchmarkingCandidates/2FeVac2Relax/candidate_workflow_22_SphinxGpaw.sh', './Benchmarking/Results/2FeVac2Relax/SphinxGpaw')
+preprocessing('./BenchmarkingCandidates/2FeVac2Relax/candidate_workflow_18_GpawGpaw.sh', './Benchmarking/Results/2FeVac2Relax/GpawGpaw')

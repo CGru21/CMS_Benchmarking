@@ -1,0 +1,48 @@
+{
+    "constraints": [
+    {
+      "constraintid": "nuse_m",
+      "parameters": [
+        { "Tool" : ["CreateAntisite"]}
+      ]
+    },
+    {
+      "constraintid": "nuse_m",
+      "parameters": [
+        { "Tool" : ["CreateVacancyAl"]}
+      ]
+    },
+    {
+      "constraintid": "nuse_m",
+      "parameters": [
+        { "Tool" : ["RelaxStructure_VASP"]}
+      ]
+    },
+    {
+      "constraintid": "nuse_m",
+      "parameters": [
+        { "Tool" : ["RunVasp"]}
+      ]
+    },
+    {
+      "constraintid": "nuse_m",
+      "parameters": [
+        { "Tool" : ["CalcChemicalPotentialAl"]}
+      ]
+    },
+    {
+      "constraintid": "itn_m",
+      "parameters": [
+        { "Tool" : ["CalcPhysicalProperties"]},
+        { "Tool" : ["CalcPhysicalProperties"]}
+      ]
+    },
+    {
+      "constraintid": "not_connected_op",
+      "parameters": [
+        { "Tool" : ["RelaxStructure"]},
+        { "Tool" : ["RelaxStructure"]}
+      ]
+    }
+    ]
+}
