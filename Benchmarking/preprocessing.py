@@ -22,4 +22,7 @@ EOF
 ''')
 
 
-preprocessing('./BenchmarkingCandidates/FeVac/candidate_workflow_26_GpawGpaw.sh', './Benchmarking/Results/FeVac/GpawGpaw')
+preprocessing('./BenchmarkingCandidates/2FeVac/candidate_workflow_4_GpawSphinx.sh', './Benchmarking/Results/2FeVac/GpawSphinx')
+preprocessing('./BenchmarkingCandidates/2FeVac/candidate_workflow_6_SphinxSphinx.sh', './Benchmarking/Results/2FeVac/SphinxSphinx')
+preprocessing('./BenchmarkingCandidates/2FeVac/candidate_workflow_1_SphinxGpaw.sh', './Benchmarking/Results/2FeVac/SphinxGpaw')
+preprocessing('./BenchmarkingCandidates/2FeVac/candidate_workflow_2_GpawGpaw.sh', './Benchmarking/Results/2FeVac/GpawGpaw')
