@@ -33,9 +33,9 @@ del vacancyFe[1]
 
 # Run Sphinx
 calc_energy_og_job = project.create.job.Sphinx('calc_energy_og', delete_existing_job=True)
-calc_energy_og_job.structure = structure
+calc_energy_og_job.structure = originalStructure
 calc_energy_og_job.run()
-energyOriginal = calc_energy_job.output.energy_tot[0]
+energyOriginal = calc_energy_og_job.output.energy_tot[0]
 
 # Relax Structure Sphinx
 relax_job_2 = project.create.job.Sphinx('relax_defect_2', delete_existing_job=True)
@@ -51,7 +51,7 @@ calc_energy_job.run()
 energyDefect = calc_energy_job.output.energy_tot[0]
 
 # Calculate defect formation energy
-defectFormationEnergy = energyDefect - energyOriginal + chemPotential
+defectFormationEnergy = energyDefect - energyOriginal + 2*chemPotential
 
 # Calculate defect concentration
 k_B = 0.0000862
