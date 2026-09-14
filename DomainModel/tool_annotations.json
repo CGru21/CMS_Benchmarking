@@ -152,7 +152,8 @@
         "taxonomyOperations": ["CalculateDefectFormationEnergy"],
         "inputs": [
           { "Type": ["Energy"] },
-          { "Type": ["Energy"] }
+          { "Type": ["Energy"] },
+          { "Type": ["ChemicalPotential"] }
         ],
         "outputs": [
           { "Type": ["DefectFormationEnergy"], "Format": ["Float"] }
@@ -177,8 +178,7 @@
         "id": "calc_defect_concentration",
         "taxonomyOperations": ["CalculateDefectConcentration"],
         "inputs": [
-          { "Type": ["DefectFormationEnergy"], "Format": ["Float"] },
-          { "Type": ["ChemicalPotential"], "Format": ["Float"] }
+          { "Type": ["DefectFormationEnergy"], "Format": ["Float"] }
         ],
         "outputs": [
           { "Type": ["DefectConcentration"], "Format": ["Float"] }

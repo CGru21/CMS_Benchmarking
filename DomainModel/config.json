@@ -12,11 +12,11 @@
   "timeout_sec": "300",
   "solutions_dir_path": "./WorkflowCandidates/",
   "solution_length": {
-    "min": 12,
+    "min": 10,
     "max": 12
   },
   "solutions": "1000",
-  "number_of_execution_scripts": "0",
+  "number_of_execution_scripts": "30",
   "number_of_generated_graphs": "30",
   "number_of_cwl_files": "0",
   "tool_seq_repeat": "false",
