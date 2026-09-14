@@ -1,0 +1,31 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: CMS_Benchmarking
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Charlotte
+    family-names: Grunert
+    email: cgrunert@uni-potsdam.de
+    affiliation: University of Potsdam
+    orcid: 'https://orcid.org/0009-0007-1871-5409'
+abstract: >-
+  This repository was created as part of the master thesis
+  "Automated Composition and Benchmarking of Data Analysis
+  Workflows in Computational Materials Science".
+
+  The project includes a domain model for the defect
+  formation energy workflow as well as implementations for
+  the individual workflow steps. The model can be used to
+  generate workflow candidates with the Automated Pipeline
+  Explorer (APE). Additionally, workflows were chosen as
+  benchmarking candidates.
+
+  The candidates were benchmarked using consistency, defect
+  formation energy, bulk modulus, lattice constant, peak
+  memory and runtime as criteria.
+license: MIT
